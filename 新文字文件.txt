@@ -1,0 +1,21 @@
+#include <Wire.h>
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2); 
+const int SLAVE_ADDRESS = 1;
+char incomingByte = 0;
+void setup() 
+{
+  lcd.begin(16, 2);
+  Wire.begin(); // join I2C bus as a Master
+}
+void loop()
+{
+  Wire.requestFrom(SLAVE_ADDRESS, 3);
+  while (Wire.available()) 
+  {
+    incomingByte = Wire.read();
+    lcd.print(incomingByte);
+  }
+    delay(1000);
+    lcd.println();
+}
